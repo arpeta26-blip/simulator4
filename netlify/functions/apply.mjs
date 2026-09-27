@@ -16,10 +16,20 @@ function jsonResponse(status, payload) {
   });
 }
 
-export default async (request) => {
-  if (request.method !== "POST") {
-    return jsonResponse(405, { error: "Method not allowed." });
-  }
+export default async (req) => {
+  return new Response(
+    JSON.stringify({
+      success: true,
+      message: "Netlify Function is working"
+    }),
+    {
+      status: 200,
+      headers: {
+        "content-type": "application/json"
+      }
+    }
+  );
+};
 
   // Keep HRMS credentials server-side in Netlify environment variables.
   const hrmsUrl = process.env.HRMS_API_URL;
