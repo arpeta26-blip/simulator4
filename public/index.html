@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent Bridge Careers — Job Portal Simulator</title>
+<style>
+:root{--ink:#12352f;--muted:#64746f;--line:#dce7e3;--bg:#f5f8f7;--card:#fff;--accent:#0f766e;--accent2:#d99a28;--soft:#e8f4f1;--danger:#b42318}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#0d3b34;color:#fff;padding:18px 6%;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:22px;font-weight:800}.logo span{color:#e5b24b}nav{display:flex;gap:24px;font-size:14px;color:#d8e8e4}
+.hero{padding:55px 6%;background:linear-gradient(120deg,#eaf5f2,#fff8e9)}
+.hero h1{font-size:42px;line-height:1.08;margin:0 0 14px}.hero p{max-width:700px;color:var(--muted);font-size:17px}
+.badge{display:inline-block;background:#fff1cf;color:#7b5514;border-radius:20px;padding:7px 12px;font-size:12px;font-weight:700;margin-bottom:14px}
+.container{width:88%;max-width:1180px;margin:30px auto}.grid{display:grid;grid-template-columns:1.5fr .8fr;gap:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;box-shadow:0 5px 20px #12352f0b}
+.job{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}.job h2{margin:0 0 7px}.meta{color:var(--muted);font-size:14px}
+.tag{display:inline-block;background:var(--soft);color:var(--accent);padding:6px 9px;border-radius:7px;font-size:12px;margin:5px 5px 0 0}
+button{border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer}.primary{background:var(--accent);color:white}.secondary{background:#eef3f1;color:var(--ink)}
+.section-title{margin:0 0 16px;font-size:20px}label{display:block;font-size:13px;font-weight:700;margin:14px 0 6px}
+input,textarea{width:100%;padding:11px;border:1px solid #cbd9d5;border-radius:8px;background:#fff;font:inherit}textarea{min-height:90px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.hidden{display:none}
+.status{padding:14px;border-radius:10px;background:#eef8f5;margin-top:16px;font-size:14px}.status strong{color:var(--accent)}
+.status.error{background:#fff0ee}.status.error strong{color:var(--danger)}
+.timeline{display:grid;gap:12px}.step{display:flex;gap:12px;align-items:center;font-size:14px}.dot{width:10px;height:10px;border-radius:50%;background:#c8d4d1}.dot.on{background:var(--accent)}
+.api{font-family:Consolas,monospace;background:#122824;color:#d9f4ed;padding:14px;border-radius:10px;font-size:12px;overflow:auto;white-space:pre-wrap}
+.small{font-size:12px;color:var(--muted)}footer{padding:30px 6%;color:#74837f;text-align:center;font-size:13px}
+@media(max-width:800px){.grid,.row{grid-template-columns:1fr}.hero{padding:35px 6%}.hero h1{font-size:32px}.job{display:block}.job button{margin-top:15px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">Talent<span>Bridge</span> Careers</div>
+  <nav><span>Jobs</span><span>Companies</span><span>About</span></nav>
+</header>
+
+<section class="hero">
+  <div>
+    <div class="badge">JOB PORTAL SIMULATOR • LIVE INTEGRATION TEST</div>
+    <h1>Find your next opportunity.</h1>
+    <p>This portal simulates a client's career site. Candidate applications and CVs are sent to the HRMS through a server-side Netlify Function so the HRMS integration secret is never exposed in the browser.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="grid">
+    <main>
+      <div class="card">
+        <div class="job">
+          <div>
+            <h2>Senior HR Manager</h2>
+            <div class="meta">Gurugram, Haryana · Full Time · 8–12 years</div>
+            <div>
+              <span class="tag">Human Resources</span>
+              <span class="tag">Leadership</span>
+              <span class="tag">HR Transformation</span>
+            </div>
+          </div>
+          <button class="primary" onclick="showApply()">Apply Now</button>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:22px 0">
+        <h3>About the role</h3>
+        <p class="meta">Lead HR strategy, people transformation, talent management and HR operations for a growing organisation. Work closely with business leaders to build scalable people practices.</p>
+        <h3>Requirements</h3>
+        <ul class="meta">
+          <li>8+ years of progressive HR experience</li>
+          <li>Strong HR operations and business partnering experience</li>
+          <li>Experience with HR technology and transformation</li>
+        </ul>
+      </div>
+
+      <div id="application" class="card hidden" style="margin-top:24px">
+        <h2 class="section-title">Apply for Senior HR Manager</h2>
+        <p class="meta">The CV will be uploaded to the Netlify Function and securely forwarded to the HRMS API.</p>
+        <form id="applyForm">
+          <div class="row">
+            <div><label>Full Name *</label><input id="name" required placeholder="e.g. Priya Sharma"></div>
+            <div><label>Email *</label><input id="email" type="email" required placeholder="priya@example.com"></div>
+          </div>
+          <div class="row">
+            <div><label>Phone *</label><input id="phone" required placeholder="+91 98765 43210"></div>
+            <div><label>Total Experience *</label><input id="experience" required placeholder="10 years"></div>
+          </div>
+          <label>Current Location</label><input id="location" placeholder="Gurugram">
+          <label>Resume / CV *</label><input id="resume" type="file" accept=".pdf,.doc,.docx" required>
+          <label>Cover Note</label><textarea id="cover" placeholder="Tell us briefly about your experience..."></textarea>
+          <div style="margin-top:18px;display:flex;gap:10px">
+            <button class="primary" type="submit" id="submitBtn">Submit Application</button>
+            <button class="secondary" type="button" onclick="hideApply()">Cancel</button>
+          </div>
+        </form>
+        <div id="result" class="status hidden"></div>
+      </div>
+    </main>
+
+    <aside>
+      <div class="card">
+        <h3 class="section-title">Integration Test</h3>
+        <div class="timeline">
+          <div class="step"><span id="d1" class="dot on"></span>Candidate applies</div>
+          <div class="step"><span id="d2" class="dot"></span>Netlify Function receives CV</div>
+          <div class="step"><span id="d3" class="dot"></span>Function calls HRMS API</div>
+          <div class="step"><span id="d4" class="dot"></span>HRMS stores candidate + CV</div>
+          <div class="step"><span id="d5" class="dot"></span>HRMS/parser processes CV</div>
+        </div>
+        <div style="margin-top:20px">
+          <label>Server-side integration</label>
+          <input value="/.netlify/functions/apply" readonly>
+          <p class="small">The browser calls only this Netlify Function. HRMS credentials stay in Netlify environment variables.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <h3 class="section-title">Payload Preview</h3>
+        <div class="api" id="payload">{\n  "source": "external_job_portal",\n  "job_id": "JOB-001",\n  "candidate": {...},\n  "resume": "uploaded-file"\n}</div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer>Talent Bridge HR Services · External Job Portal Simulator · Netlify integration build</footer>
+
+<script>
+const form = document.getElementById('applyForm');
+const submitBtn = document.getElementById('submitBtn');
+
+function showApply(){
+  document.getElementById('application').classList.remove('hidden');
+  document.getElementById('application').scrollIntoView({behavior:'smooth'});
+}
+function hideApply(){document.getElementById('application').classList.add('hidden')}
+function setStep(n){for(let i=1;i<=5;i++) document.getElementById('d'+i).classList.toggle('on',i<=n)}
+
+function showResult(html, error=false){
+  const result=document.getElementById('result');
+  result.classList.remove('hidden');
+  result.classList.toggle('error', error);
+  result.innerHTML=html;
+}
+
+form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const file=document.getElementById('resume').files[0];
+  if(!file) return;
+
+  const payload = {
+    source:"external_job_portal",
+    job_id:"JOB-001",
+    job_title:"Senior HR Manager",
+    candidate:{
+      name:document.getElementById('name').value,
+      email:document.getElementById('email').value,
+      phone:document.getElementById('phone').value,
+      experience:document.getElementById('experience').value,
+      location:document.getElementById('location').value
+    },
+    resume_filename:file.name
+  };
+  document.getElementById('payload').textContent=JSON.stringify(payload,null,2);
+
+  const fd = new FormData();
+  fd.append('name', payload.candidate.name);
+  fd.append('email', payload.candidate.email);
+  fd.append('phone', payload.candidate.phone);
+  fd.append('experience', payload.candidate.experience);
+  fd.append('location', payload.candidate.location);
+  fd.append('cover_note', document.getElementById('cover').value);
+  fd.append('job_id', payload.job_id);
+  fd.append('job_title', payload.job_title);
+  fd.append('source', payload.source);
+  fd.append('resume', file, file.name);
+
+  submitBtn.disabled=true;
+  submitBtn.textContent='Sending...';
+  setStep(2);
+  showResult('<strong>Uploading CV securely…</strong><br>Sending the application to the Netlify server-side function.');
+
+  try{
+    const response = await fetch('/.netlify/functions/apply', {method:'POST', body:fd});
+    const data = await response.json().catch(()=>({}));
+    if(!response.ok) throw new Error(data.error || 'The integration request failed.');
+
+    setStep(5);
+    showResult(
+      '<strong>Application sent successfully.</strong><br>'+
+      'Netlify Function accepted the CV and forwarded it to the HRMS API.<br>'+
+      '<span class="small">HRMS response: '+escapeHtml(JSON.stringify(data))+'</span>'
+    );
+    setStep(3); setStep(4); setStep(5);
+  }catch(err){
+    showResult('<strong>Integration test failed.</strong><br>'+escapeHtml(err.message), true);
+    setStep(2);
+  }finally{
+    submitBtn.disabled=false;
+    submitBtn.textContent='Submit Application';
+  }
+});
+
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+}
+</script>
+</body>
+</html>
